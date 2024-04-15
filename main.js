@@ -48,6 +48,15 @@ app.get('/', function (req, res) {
 
 
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Ruta para servir el archivo index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+
+
 // Endpoint para la verificación de la suscripción de WhatsApp
 app.get('/webhook', function (req, res) {
   if (
