@@ -34,19 +34,8 @@ const historialPath = path.join(__dirname, 'historial');
 app.use(bodyParser.json());
 
 
-
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-
-
-
-
-// // Punto de entrada del servidor
-app.get('/', function (req, res) {
-  res.send('Recibido');
-});
-
-
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -54,7 +43,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 
 
 // Endpoint para la verificación de la suscripción de WhatsApp
@@ -73,9 +61,9 @@ EtapasMSG = []
 registro = []
 
 
-setInterval(() => {
-  console.log('Etapa:', EtapasMSG);
-}, 1000);
+// setInterval(() => {
+//   console.log('Etapa:', EtapasMSG);
+// }, 1000);
 
 
 
