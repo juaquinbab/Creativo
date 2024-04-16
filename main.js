@@ -212,6 +212,7 @@ app.post("/webhook", function (request, response) {
       }, 1000); // Esperar 1 segundo entre lotes
     }
   }
+  
 
   // Iniciar el procesamiento por lotes
   procesarMensajesBatch15(EtapasMSG.slice());
