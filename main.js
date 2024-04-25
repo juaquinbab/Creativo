@@ -58,9 +58,9 @@ EtapasMSG = []
 registro = []
 
 
-setInterval(() => {
-  console.log('Etapa:', EtapasMSG);
-}, 1000);
+// setInterval(() => {
+//   console.log('Etapa:', EtapasMSG);
+// }, 1000);
 
 
 
