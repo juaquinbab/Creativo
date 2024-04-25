@@ -22,11 +22,10 @@ const { web } = require('./web');
 require('dotenv').config();
 
 
-const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN
+const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN;
 const PORT = process.env.PORT;
 const urlserver = process.env.urlserver;
 const apiKey = process.env.apiKey;
-
 
 
 const historialPath = path.join(__dirname, 'historial');
