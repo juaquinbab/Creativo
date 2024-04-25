@@ -22,7 +22,8 @@ const { web } = require('./web');
 require('dotenv').config();
 
 
-const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN
+// const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN
+const WHATSAPP_API_TOKEN = AADY3at1OhcBO3fSSM662Rgyo45GOdE4JNOOT4ze6OP27g2aiB9eFfbOTcWwfydj3CwcmZBiCLzNb7ZApNPs34WN6yfZAy1nkZBUffJG3ngmrUGvEcKlheyFuZB8kcZAl4q0e82c91jdsniz3E9uDSBK1rZBMhJ3UTcKxYXar3t8T86KqVc3kRZA9pBl8owENeKkZBcYVGCkPdoMyf2On
 const PORT = process.env.PORT;
 const urlserver = process.env.urlserver;
 const apiKey = process.env.apiKey;
