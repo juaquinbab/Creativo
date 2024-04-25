@@ -169,6 +169,10 @@
       height: 100vh;
     }
 
+    .whatsapp-box.cambio-1 {
+      font-weight: bold;
+    }
+
     #chat-box {
       width: 100%;
       min-height: 300px;
@@ -283,8 +287,31 @@
       /* Espacio entre divs */
     }
 
+    .whatsapp-box.cambio-1 {
+      background-color: #24baff;
+      /* Verde claro al estilo de WhatsApp */
+      padding: 5px 10px;
+      /* Espaciado interno */
+      margin-bottom: 1px;
+      /* Espaciado inferior */
+      cursor: pointer;
+      /* Cambiar cursor al pasar por encima */
+      border-radius: 5px;
+
+    }
+
+    /* Estilo para archivos con Cambio = 0 (mismo estilo que antes) */
+    .whatsapp-box.cambio-0 {
+      background-color: #df0909;
+      /* Verde claro al estilo de WhatsApp */
+      padding: 5px 10px;
+      margin-bottom: 1px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
     .whatsapp-box {
-      background-color: #dcf8c6;
+      background-color: #1ff714;
       /* Verde claro al estilo de WhatsApp */
       padding: 5px 10px;
       /* Espaciado interno */
@@ -369,41 +396,66 @@
   //////////////// MUESTRA EL HISTORIAL
   ////////////////////////////////////////////
 
-
   const historialDiv = document.getElementById('historial');
 
   async function cargarHistorial() {
     const response = await fetch('/historial');
     const files = await response.json();
-    files.forEach(fileName => {
+
+    files.forEach(async fileName => {
+      const fileContentResponse = await fetch(`/historial/${fileName}`);
+      const fileContent = await fileContentResponse.json();
+      const lastBody = fileContent[fileContent.length - 1].body;
+
+      const fileNameWithoutExtension = fileName.replace('.json', '');
       const link = document.createElement('div');
-      link.classList.add('whatsapp-box'); // Clase CSS para el estilo de WhatsApp
+      link.classList.add('whatsapp-box');
+
+      const circleSpan = document.createElement('span');
+      circleSpan.textContent = '●';
+      circleSpan.style.color = fileContent[fileContent.length - 1].Cambio === 1 ? 'red' : 'black';
+
+      link.appendChild(circleSpan);
+      link.innerHTML += `${fileNameWithoutExtension}: <br>${lastBody}`;
+
       link.addEventListener('click', async () => {
-        const fileContentResponse = await fetch(`/historial/${fileName}`);
-        const fileContent = await fileContentResponse.json();
-        console.log('Contenido del archivo:', fileContent);
-        const updateResponse = await fetch('/mensajeIndex', {
+        const fileName = fileNameWithoutExtension;
+
+        const fileContentResponse = await fetch(`/historial/${fileName}.json`);
+        let fileContent = await fileContentResponse.json();
+
+        // Actualizar el valor de Cambio en el archivo JSON original
+        fileContent = fileContent.map(item => {
+          item.Cambio = 0;
+          return item;
+        });
+
+        const updateResponse = await fetch(`/historial/${fileName}.json`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(fileContent)
         });
+
         if (updateResponse.ok) {
-          console.log('MensajeIndex actualizado en el servidor');
+          console.log('Archivo actualizado: Cambio = 0');
+          MensajeIndex.push(...fileContent);
+          console.log('MensajeIndex actualizado:', MensajeIndex);
         } else {
-          console.error('Error al actualizar MensajeIndex en el servidor');
+          console.error('Error al actualizar el archivo');
         }
       });
 
-      const fileNameWithoutExtension = fileName.replace('.json', ''); // Eliminar la extensión .json
-      link.textContent = fileNameWithoutExtension;
       historialDiv.appendChild(link);
       historialDiv.appendChild(document.createElement('br'));
     });
   }
 
   cargarHistorial();
+
+
+
 
 </script>
 
@@ -521,66 +573,66 @@
 
 
   // funcion para recibir los mensajes 
- // funcion para recibir los mensajes 
-async function cargarMensajes() {
-  try {
-    const response = await fetch('/obtenerMensajes1');
-    const data = await response.json();
+  // funcion para recibir los mensajes 
+  async function cargarMensajes() {
+    try {
+      const response = await fetch('/obtenerMensajes1');
+      const data = await response.json();
 
-    const messagesDiv = document.getElementById('messages1');
+      const messagesDiv = document.getElementById('messages1');
 
-    messagesDiv.innerHTML = '';
+      messagesDiv.innerHTML = '';
 
-    data.filter(message => message.trim() !== '').forEach(message => {
-      if (isURL(message)) {
-        if (message.endsWith('.ogg')) {
-          const audioElement = document.createElement('audio');
-          audioElement.src = message;
-          audioElement.controls = true; // Agregar controles de reproducción
-          audioElement.style.marginBottom = '20px'; // Espacio entre elementos
-          messagesDiv.appendChild(audioElement);
+      data.filter(message => message.trim() !== '').forEach(message => {
+        if (isURL(message)) {
+          if (message.endsWith('.ogg')) {
+            const audioElement = document.createElement('audio');
+            audioElement.src = message;
+            audioElement.controls = true; // Agregar controles de reproducción
+            audioElement.style.marginBottom = '20px'; // Espacio entre elementos
+            messagesDiv.appendChild(audioElement);
+          } else {
+            const imageElement = document.createElement('img');
+            imageElement.src = message;
+            imageElement.alt = 'Imagen cargada dinámicamente';
+            imageElement.style.width = '200px'; // Establece el ancho de la imagen
+            imageElement.style.height = '200px'; // Establece la altura de la imagen
+            imageElement.style.objectFit = 'cover'; // Ajusta la imagen para que llene el contenedor manteniendo la relación de aspecto
+            imageElement.style.cursor = 'pointer'; // Cambia el cursor al pasar sobre la imagen
+            imageElement.addEventListener('click', function () {
+              const newWindow = window.open(message, '_blank');
+              if (newWindow) {
+                newWindow.focus();
+              } else {
+                alert('La ventana emergente fue bloqueada. Por favor, permite las ventanas emergentes para ver la imagen.');
+              }
+            });
+
+            messagesDiv.appendChild(imageElement);
+          }
         } else {
-          const imageElement = document.createElement('img');
-          imageElement.src = message;
-          imageElement.alt = 'Imagen cargada dinámicamente';
-          imageElement.style.width = '200px'; // Establece el ancho de la imagen
-          imageElement.style.height = '200px'; // Establece la altura de la imagen
-          imageElement.style.objectFit = 'cover'; // Ajusta la imagen para que llene el contenedor manteniendo la relación de aspecto
-          imageElement.style.cursor = 'pointer'; // Cambia el cursor al pasar sobre la imagen
-          imageElement.addEventListener('click', function() {
-            const newWindow = window.open(message, '_blank');
-            if (newWindow) {
-              newWindow.focus();
-            } else {
-              alert('La ventana emergente fue bloqueada. Por favor, permite las ventanas emergentes para ver la imagen.');
-            }
-          });
+          const messageElement = document.createElement('div');
+          messageElement.textContent = message;
 
-          messagesDiv.appendChild(imageElement);
-        }
-      } else {
-        const messageElement = document.createElement('div');
-        messageElement.textContent = message;
+          // Establecer estilos...
+          messageElement.style.padding = '10px';
+          messageElement.style.borderRadius = '8px';
+          messageElement.style.marginBottom = '20px';
+          messageElement.style.fontSize = '16px';
+          messageElement.style.wordWrap = 'break-word';
+          messageElement.style.position = 'relative'; // Para usar posición absoluta en la sombra
 
-        // Establecer estilos...
-        messageElement.style.padding = '10px';
-        messageElement.style.borderRadius = '8px';
-        messageElement.style.marginBottom = '20px';
-        messageElement.style.fontSize = '16px';
-        messageElement.style.wordWrap = 'break-word';
-        messageElement.style.position = 'relative'; // Para usar posición absoluta en la sombra
+          // Colocar mensajes que empiezan con "Asesor" a la izquierda
+          if (message.startsWith('Asesor:')) {
+            messageElement.style.textAlign = 'left';
+            messageElement.style.backgroundColor = '#f0f0f0';
+          } else {
+            messageElement.style.textAlign = 'right';
+            messageElement.style.backgroundColor = '#e2f7cb'; // Color de fondo para mensajes no "Asesor"
+          }
 
-        // Colocar mensajes que empiezan con "Asesor" a la izquierda
-        if (message.startsWith('Asesor:')) {
-          messageElement.style.textAlign = 'left';
-          messageElement.style.backgroundColor = '#f0f0f0';
-        } else {
-          messageElement.style.textAlign = 'right';
-          messageElement.style.backgroundColor = '#e2f7cb'; // Color de fondo para mensajes no "Asesor"
-        }
-
-        // Añadir sombra
-        const shadow = document.createElement('div');
+          // Añadir sombra
+          const shadow = document.createElement('div');
           shadow.className = 'message-shadow';
           shadow.style.position = 'absolute';
           shadow.style.top = '0';
@@ -592,20 +644,19 @@ async function cargarMensajes() {
           messageElement.appendChild(shadow);
 
 
-        messagesDiv.appendChild(messageElement);
-      }
-    });
-  } catch (error) {
-    console.error('Error al cargar mensajes:', error);
+          messagesDiv.appendChild(messageElement);
+        }
+      });
+    } catch (error) {
+      console.error('Error al cargar mensajes:', error);
+    }
   }
-}
 
-function isURL(str) {
-  // Función para verificar si una cadena es una URL
-  const pattern = /^(http|https):\/\/[^ "]+$/;
-  return pattern.test(str);
-}
-
+  function isURL(str) {
+    // Función para verificar si una cadena es una URL
+    const pattern = /^(http|https):\/\/[^ "]+$/;
+    return pattern.test(str);
+  }
 
 
 
@@ -613,8 +664,6 @@ function isURL(str) {
 
 
 
-
-  // funcion paar enviar mensajes
   // funcion paar enviar mensajes
   async function enviarRespuesta() {
     const responseText = document.getElementById('response').value;

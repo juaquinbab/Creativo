@@ -58,9 +58,9 @@ EtapasMSG = []
 registro = []
 
 
-// setInterval(() => {
-//   console.log('Etapa:', EtapasMSG);
-// }, 1000);
+setInterval(() => {
+  console.log('Etapa:', EtapasMSG);
+}, 1000);
 
 
 
@@ -133,6 +133,7 @@ app.post("/webhook", function (request, response) {
     audioID: audioID,
     etapa: 0,
     interactiveId: interactiveId,
+    Cambio: 1,
 
   };
 
@@ -160,6 +161,7 @@ app.post("/webhook", function (request, response) {
     EtapasMSG[objetoExistenteIndex].imgID = objetoMensaje.imgID;
     EtapasMSG[objetoExistenteIndex].interactiveId = objetoMensaje.interactiveId
     EtapasMSG[objetoExistenteIndex].audioID = objetoMensaje.audioID
+    EtapasMSG[objetoExistenteIndex].Cambio = 1
 
 
   } else {
@@ -714,62 +716,6 @@ app.post("/webhook", function (request, response) {
   ///////////////////////////////////
 
 
-
-
-
-  // ///////////////////////////////////////////////
-  // ESTE CODIGO CARGA LOS AUDIOS AL HISTORIAL
-  // //////////////////////////////////////////////////////////
-
-  let Usuario1AU = 'No hay usuarios'; // Valor predeterminado en caso de que no haya valores en mensajesIndex1
-
-  // Función que se ejecuta cada 2 segundos para asignar 'from' a 'Usuario1'
-  function asignarValorname() {
-    if (MensajeIndex.length > 0 && MensajeIndex[0].name) {
-      Usuario1AU = MensajeIndex[0].name;
-    } else {
-      Usuario1AU = 'no hay usuarios'; // Si no hay valores en mensajesIndex1, se asigna 'no hay usuarios'
-    }
-    // console.log('Valor de "Usuario1":', Usuario1);
-  }
-
-  setInterval(asignarValorname, 1000);
-
-
-
-  app.get('/Usuarioget1', (req, res) => {
-    // Supongamos que Usuario1 tiene un valor en el servidor
-    Usuario1AU = Usuario1AU;
-
-    // Envía el valor de Usuario1 al cliente
-    res.send(Usuario1AU);
-  });
-
-
-  let borrar1AU = 'No hay usuario'; // Variable para almacenar el valor de 'from'
-
-  // Función que se ejecuta cada 2 segundos para asignar 'from' a 'borrar1'
-  function asignarValorFrom() {
-    if (MensajeIndex.length > 0 && MensajeIndex[0].from) {
-      borrar1AU = MensajeIndex[0].from;
-    } else {
-      borrar1AU = 'No hay usuario';
-    }
-    // console.log('Valor de "borrar1":', borrar1);
-  }
-
-  setInterval(asignarValorFrom, 1000);
-
-  app.get('/BuscaOrden', (req, res) => {
-    // Envía el valor de borrar1 al cliente
-    res.send(borrar1AU);
-  });
-
-
-
-  // /////////////////////////////////
-  ///////////
-  ////////////////////
 
 
 

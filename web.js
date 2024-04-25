@@ -33,7 +33,7 @@ function web(EtapasMSG, WHATSAPP_API_TOKEN) {
                     interactive: {
                       type: 'button',
                       body: {
-                        text: 'Construimos páginas web a medida, justo como la necesita. El posicionamiento web es crucial para su empresa, y nosotros le ayudamos a dar ese siguiente paso.\n\nPagina Web Informativa $1.100.000'
+                        text: 'Construimos páginas web a medida, justo como la necesita. El posicionamiento web es crucial para su empresa, y nosotros le ayudamos a dar ese siguiente paso.\n\nPagina Web Informativa $1.100.000\n\nSi está interesado por favor escribir página.'
                       },
                       action: {
                         buttons: [
