@@ -624,7 +624,7 @@ app.post("/webhook", function (request, response) {
               .then(imageResponse => {
                 const randomThreeDigitNumber = Math.floor(1 + Math.random() * 9000); // Número aleatorio entre 100 y 999
                 const modifiedFileName = `${from}-${randomThreeDigitNumber}.jpg`;
-                const imagePath = path.join(__dirname, '/public/historico', modifiedFileName);
+                const imagePath = path.join(__dirname, '/app/public/historico', modifiedFileName);
                 const writer = fs.createWriteStream(imagePath);
 
                 imageResponse.data.pipe(writer);
