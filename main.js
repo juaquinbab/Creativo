@@ -17,6 +17,7 @@ const { menu } = require('./menu');
 const { cotizacion } = require('./cotizacion');
 const { datos } = require('./datos');
 const { inicio } = require('./inicio');
+const { inicio2 } = require('./inicio2');
 const { fin } = require('./fin');
 const { web } = require('./web');
 require('dotenv').config();
@@ -26,8 +27,7 @@ const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN;
 const PORT = process.env.PORT;
 const urlserver = process.env.urlserver;
 const apiKey = process.env.apiKey;
-
-
+const idnumero = '301766666358432'
 const historialPath = path.join(__dirname, 'historial');
 
 app.use(bodyParser.json());
@@ -223,12 +223,13 @@ app.post("/webhook", function (request, response) {
 
   // ESTE ES EL ASESOR PRINCIPAL
   inicio(EtapasMSG, WHATSAPP_API_TOKEN);
+  inicio2(EtapasMSG, WHATSAPP_API_TOKEN);
   // asesor1(EtapasMSG, apiKey, WHATSAPP_API_TOKEN);
-  menu(EtapasMSG, WHATSAPP_API_TOKEN);
-  cotizacion(EtapasMSG, WHATSAPP_API_TOKEN);
-  datos(EtapasMSG, WHATSAPP_API_TOKEN);
-  fin(EtapasMSG, WHATSAPP_API_TOKEN);
-  web(EtapasMSG, WHATSAPP_API_TOKEN);
+  // menu(EtapasMSG, WHATSAPP_API_TOKEN);
+  // cotizacion(EtapasMSG, WHATSAPP_API_TOKEN);
+  // datos(EtapasMSG, WHATSAPP_API_TOKEN);
+  // fin(EtapasMSG, WHATSAPP_API_TOKEN);
+  // web(EtapasMSG, WHATSAPP_API_TOKEN);
 
 
 
@@ -338,7 +339,7 @@ app.post("/webhook", function (request, response) {
       }
     };
 
-    axios.post(`https://graph.facebook.com/v16.0/194001337131905/messages`, payload, {
+    axios.post(`https://graph.facebook.com/v16.0/${idnumero}/messages`, payload, {
       headers: {
         Authorization: `Bearer ${WHATSAPP_API_TOKEN}`,
         'Content-Type': 'application/json'
@@ -571,7 +572,7 @@ app.post("/webhook", function (request, response) {
           };
 
           axios
-            .post(`https://graph.facebook.com/v16.0/194001337131905/messages`, payload, {
+            .post(`https://graph.facebook.com/v16.0/${idnumero}/messages`, payload, {
               headers: {
                 Authorization: `Bearer ${WHATSAPP_API_TOKEN}`,
                 'Content-Type': 'application/json',
@@ -777,7 +778,7 @@ app.post("/webhook", function (request, response) {
           };
 
           axios
-            .post(`https://graph.facebook.com/v16.0/194001337131905/messages`, payload, {
+            .post(`https://graph.facebook.com/v16.0/${idnumero}/messages`, payload, {
               headers: {
                 Authorization: `Bearer ${WHATSAPP_API_TOKEN}`,
                 'Content-Type': 'application/json',
@@ -923,6 +924,12 @@ app.post("/webhook", function (request, response) {
 
 
 
+
+
+
+
+
+  
 
 
 

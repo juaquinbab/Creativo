@@ -398,61 +398,66 @@
 
   const historialDiv = document.getElementById('historial');
 
-  async function cargarHistorial() {
-    const response = await fetch('/historial');
-    const files = await response.json();
+async function cargarHistorial() {
+  const response = await fetch('/historial');
+  const files = await response.json();
 
-    files.forEach(async fileName => {
-      const fileContentResponse = await fetch(`/historial/${fileName}`);
-      const fileContent = await fileContentResponse.json();
-      const lastBody = fileContent[fileContent.length - 1].body;
+  files.forEach(async fileName => {
+    const fileContentResponse = await fetch(`/historial/${fileName}`);
+    const fileContent = await fileContentResponse.json();
+    const lastBody = fileContent[fileContent.length - 1].body;
 
-      const fileNameWithoutExtension = fileName.replace('.json', '');
-      const link = document.createElement('div');
-      link.classList.add('whatsapp-box');
+    // Obtener las dos últimas palabras del body
+    const bodyWords = lastBody.split(' ');
+    const lastTwoWords = bodyWords.slice(-2).join(' ');
 
-      const circleSpan = document.createElement('span');
-      circleSpan.textContent = '●';
-      circleSpan.style.color = fileContent[fileContent.length - 1].Cambio === 1 ? 'red' : 'black';
+    const fileNameWithoutExtension = fileName.replace('.json', '');
+    const link = document.createElement('div');
+    link.classList.add('whatsapp-box');
 
-      link.appendChild(circleSpan);
-      link.innerHTML += `${fileNameWithoutExtension}: <br>${lastBody}`;
+    const circleSpan = document.createElement('span');
+    circleSpan.textContent = '●';
+    circleSpan.style.color = fileContent[fileContent.length - 1].Cambio === 1 ? 'red' : 'black';
 
-      link.addEventListener('click', async () => {
-        const fileName = fileNameWithoutExtension;
+    link.appendChild(circleSpan);
+    link.innerHTML += `${fileNameWithoutExtension}: <br>${lastTwoWords}`;
 
-        const fileContentResponse = await fetch(`/historial/${fileName}.json`);
-        let fileContent = await fileContentResponse.json();
+    link.addEventListener('click', async () => {
+      const fileName = fileNameWithoutExtension;
 
-        // Actualizar el valor de Cambio en el archivo JSON original
-        fileContent = fileContent.map(item => {
-          item.Cambio = 0;
-          return item;
-        });
+      const fileContentResponse = await fetch(`/historial/${fileName}.json`);
+      let fileContent = await fileContentResponse.json();
 
-        const updateResponse = await fetch(`/historial/${fileName}.json`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(fileContent)
-        });
-
-        if (updateResponse.ok) {
-          console.log('Archivo actualizado: Cambio = 0');
-          MensajeIndex.push(...fileContent);
-          console.log('MensajeIndex actualizado:', MensajeIndex);
-        } else {
-          console.error('Error al actualizar el archivo');
-        }
+      // Actualizar el valor de Cambio en el archivo JSON original
+      fileContent = fileContent.map(item => {
+        item.Cambio = 0;
+        return item;
       });
 
-      historialDiv.appendChild(link);
-      historialDiv.appendChild(document.createElement('br'));
-    });
-  }
+      const updateResponse = await fetch(`/historial/${fileName}.json`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fileContent)
+      });
 
-  cargarHistorial();
+      if (updateResponse.ok) {
+        console.log('Archivo actualizado: Cambio = 0');
+        MensajeIndex.push(...fileContent);
+        console.log('MensajeIndex actualizado:', MensajeIndex);
+      } else {
+        console.error('Error al actualizar el archivo');
+      }
+    });
+
+    historialDiv.appendChild(link);
+    historialDiv.appendChild(document.createElement('br'));
+  });
+}
+
+cargarHistorial();
+
 
 
 
