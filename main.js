@@ -22,10 +22,11 @@ const { fin } = require('./fin');
 const { web } = require('./web');
 require('dotenv').config();
 
-
-const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN;
+const WHATSAPP_API_TOKEN = "EAATNbTfXSB4BOZCT4vHExjthl0IpTvsJDRAaBUXCwAzltirL5hFHbBX2SSm7A0QpsIeIH2OCbQkIQJrnsvGaEard3tM0MZAXh5WPl3jgo0BzvGib3ZAyYi0hKo7mCsKUtlOETpUclbonYosCHezkrq6lCxYAFjs8XjlHdudyODE5aakeK39SM1qO3kYZCVea;
+//const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN;
 const PORT = process.env.PORT;
-const urlserver = process.env.urlserver;
+//const urlserver = process.env.urlserver;
+const urlserver = "https://creativo-production.up.railway.app/";
 const apiKey = process.env.apiKey;
 const idnumero = '301766666358432'
 const historialPath = path.join(__dirname, 'historial');
