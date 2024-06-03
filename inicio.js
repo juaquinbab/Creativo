@@ -34,10 +34,10 @@ function inicio(EtapasMSG, WHATSAPP_API_TOKEN) {
           type: 'cta_url',
           header: {
             type: 'text',
-            text: 'JHON SOPORTE'
+            text: 'JHON VENTAS 2'
           },
           body: {
-            text: '😊 Para brindarte una atención más personalizada, te vamos a direcciónar a nuestra línea de 🛠 Soporte Técnico donde unos de 👨🏻‍🔧👨🏻‍🔧 nuestros colaboradores te ayudara con tu requerimiento dale click aquí NUMERO SOPORTE: 📲  321-575-94-12'
+            text: '😊 Para brindarte una atención más personalizada, te vamos a direccionar a nuestra línea de 📞 Ventas, donde uno de nuestros expertos 👨🏻‍💼 te ayudará con tu requerimiento. Haz clic aquí para recibir asistencia inmediata NUEVA LINEA :  📲 302-457-21-02'
           },
           footer: {
             text: 'Gracias por su preferencia'
@@ -46,8 +46,8 @@ function inicio(EtapasMSG, WHATSAPP_API_TOKEN) {
           action: {
             name: "cta_url",
             parameters: {
-              "display_text": "SOPORTE",
-              "url": "https://wa.link/xpnyof"
+              "display_text": "VENTAS 2",
+              "url": "https://wa.link/lcsftk"
             }
           },
 

@@ -36,7 +36,7 @@ function inicio2(EtapasMSG, WHATSAPP_API_TOKEN) {
           type: 'cta_url',
           header: {
             type: 'text',
-            text: 'JHON VENTAS'
+            text: 'JHON VENTAS ' 
           },
           body: {
             text: ' 😊 Para brindarte una atención más personalizada, te vamos a direccionar a nuestra línea de 📞 Ventas, donde uno de nuestros expertos 👨🏻‍💼 te ayudará con tu requerimiento. Haz clic aquí para recibir asistencia inmediata NUEVA LINEA :  📲 300-329-00-88'

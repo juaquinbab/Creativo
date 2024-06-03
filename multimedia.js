@@ -6,7 +6,7 @@ const sleep = (milliseconds) => {
 
 async function sendMessage(phoneNumber) {
   const url = 'https://graph.facebook.com/v16.0/301766666358432/messages';
-  const accessToken = 'EAATNbTfXSB4BO7KhsM7aqufZCSGpRQt7z6bb7gEMW1av2kmetM4xalD7X50AQQa3VYZBpZAkNbRhzbJMGdtOIlRpc0Uuqqsfgh2NOTMPG2CBTFZC1atdoPa0RkQXOzwXvqPgbLFK7FbIKZCkG8iwyZBKDZCDY4oewuSPncpa6dZCBu2NQDg8jkXS6mMZAm7NSjG5ZB7RvT5EiL3doVZCfgZD';
+  const accessToken = 'EAATNbTfXSB4BOZCT4vHExjthl0IpTvsJDRAaBUXCwAzltirL5hFHbBX2SSm7A0QpsIeIH2OCbQkIQJrnsvGaEard3tM0MZAXh5WPl3jgo0BzvGib3ZAyYi0hKo7mCsKUtlOETpUclbonYosCHezkrq6lCxYAFjs8XjlHdudyODE5aakeK39SM1qO3kYZCVea';
 
   const headers = {
     'Authorization': `Bearer ${accessToken}`,
@@ -19,7 +19,7 @@ async function sendMessage(phoneNumber) {
     "to": phoneNumber,
     "type": "template",
     "template": {
-      "name": "promocion",
+      "name": "envios2",
       "language": {
         "code": "en_US"
       },
@@ -42,7 +42,15 @@ async function sendMessage(phoneNumber) {
   }
 }
 
-const phoneNumbers = ["573196693304"]; // Agrega aquí los números de teléfono
+const phoneNumbers = [
+  
+  
+  
+  "573196693304"
+
+
+
+]; // Agrega aquí los números de teléfono
 
 async function sendMessages() {
   for (const number of phoneNumbers) {
