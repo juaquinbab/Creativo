@@ -326,8 +326,6 @@
 </head>
 
 
-
-
 <!-- Cabecera -->
 <div id="header">
   <div>
@@ -339,8 +337,9 @@
 
   </div>
   <div>
-    <button id="resetButton">Finalizar Usuario</button> <!-- Botón Finalizar Usuario -->
+    <button id="resetButton">Contacto Creativo</button> 
   </div>
+  
 </div>
 
 
@@ -407,9 +406,14 @@ async function cargarHistorial() {
     const fileContent = await fileContentResponse.json();
     const lastBody = fileContent[fileContent.length - 1].body;
 
-    // Obtener las dos últimas palabras del body
+    // Obtener las dos últimas palabras del body, o reemplazarlas por "imagen" si la última palabra es una URL
+    let lastTwoWords;
     const bodyWords = lastBody.split(' ');
-    const lastTwoWords = bodyWords.slice(-2).join(' ');
+    if (/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(bodyWords[bodyWords.length - 1])) {
+      lastTwoWords = 'imagen';
+    } else {
+      lastTwoWords = bodyWords.slice(-2).join(' ');
+    }
 
     const fileNameWithoutExtension = fileName.replace('.json', '');
     const link = document.createElement('div');
@@ -457,7 +461,6 @@ async function cargarHistorial() {
 }
 
 cargarHistorial();
-
 
 
 
